@@ -1,2 +1,2 @@
 #!/bin/bash
-awk "NR % 2 == 1"
+awk -v 2=$NUM 'NR % NUM == 1'
