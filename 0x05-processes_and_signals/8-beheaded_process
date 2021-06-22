@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# script to kill script definitively
+# Another way to do it:
+# kill -9 "$(pgrep -f 7-highlander)"
+pkill -KILL -f "7-highlander"
