@@ -1,7 +1,9 @@
 # 0x07. Networking basics #0
 ## OSI Model
 What it is
+The OSI model is a conceptual model that characterizes the communication functions of a telecommunication system without regard to their underlying internal structure and technology
 How many layers it has
+7
 How it is organized
 ## What is a LAN
 Typical usage
