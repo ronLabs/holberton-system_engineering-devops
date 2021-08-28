@@ -18,6 +18,11 @@ global
         ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
         ssl-default-bind-options no-sslv3
 
+        # Custom setup
+        maxconn 2048
+        # maximum size of temporary DHE keys that are generated
+        tune.ssl.default-dh-param 2048
+
 defaults
         log     global
         mode    http
@@ -34,13 +39,30 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-frontend http_front
-   bind *:80
-   bind *:443 ssl crt /etc/letsencrypt/live/www.ricardo1470.tech/fullchain.pem
-   stats uri /haproxy?stats
-   default_backend http_back
+        # custom setup
+        # forwardfor option sets HAProxy to add X-Forwarded-For headers to each request
+        option forwardfor
+        # reduces latency between HAProxy and your users by closing connections but maintaining keep-alives
+        option http-server-close
 
-backend http_back
-   balance roundrobin
-   server 1466-web-01 35.243.141.246:80 check
-   server 1466-web-02 54.227.41.202:80 check 
+frontend node-http
+    bind *:80
+    mode http
+    default_backend web-backend
+
+frontend node-https
+   bind *:443 ssl crt /etc/haproxy/certs/www.jvillegasholbyprojects.tech.pem
+   reqadd X-Forwarded-Proto:\ https
+   acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+   use_backend letsencrypt-backend if letsencrypt-acl
+   default_backend web-backend
+
+backend web-backend
+    balance roundrobin
+    option forwardfor
+    redirect scheme https if !{ ssl_fc }
+    server 1216-web-01 35.243.214.144:80 check
+    server 1216-web-02 34.233.133.27:80 check
+
+backend letsencrypt-backend
+   server letsencrypt 127.0.0.1:54321
