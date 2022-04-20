@@ -1,7 +1,6 @@
-# puppet manifest to install puppt-lint package.
+# puppet manifest to install a package
 
-package { 'puppet-lint':
-  ensure   => '2.1.0',
-  provider => 'gem',
-  source   => 'http://rubygems.org/',
+exec {'flask install':
+  command => 'pip3 install Flask==2.1.0',
+  provider => shell,
 }
