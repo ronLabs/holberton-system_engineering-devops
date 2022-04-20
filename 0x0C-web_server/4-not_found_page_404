@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Installs nginx server
+# Creates html page to send as response to GET requests
+# Creates a config file for the nginx server
+# Configures a route to redirect with code 301
+# COnfigures a 404 page error
+apt update
+apt install -y nginx
+
+echo "Holberton School for the win!" > /var/www/html/index.html
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+cat > /etc/nginx/sites-available/default << "EOF"
+# Default server configuration
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+	server_name _;
+	location /redirect_me {
+		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+	}
+	error_page 404 /404.html;
+	location /404 {
+		root /var/www/html;
+		internal;
+	}
+}
+EOF
+
+service nginx restart
