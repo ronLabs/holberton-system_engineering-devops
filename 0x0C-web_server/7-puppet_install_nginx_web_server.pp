@@ -25,7 +25,7 @@ file { 'Create default index.html':
   ensure  => 'present',
   name    => 'index.html',
   path    => '/var/www/html/index.html',
-  content => "Holberton School is cool!\n"
+  content => "Hellow World!\n"
 }
 
 file { 'Create default 404.html':
