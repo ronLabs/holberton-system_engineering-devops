@@ -4,11 +4,14 @@ $defaultconfig = "# Default server configuration
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server;
+
 	root /var/www/html;
 	index index.html index.htm;
+
 	location /redirect_me {
 		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
 	}
+
 	error_page 404 /404.html;
 	location =/404.html {
 		root /var/www/html;
@@ -25,7 +28,7 @@ file { 'Create default index.html':
   ensure  => 'present',
   name    => 'index.html',
   path    => '/var/www/html/index.html',
-  content => "Hellow World!\n"
+  content => "Hello World!\n"
 }
 
 file { 'Create default 404.html':
