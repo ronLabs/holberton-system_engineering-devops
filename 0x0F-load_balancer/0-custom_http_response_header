@@ -1,27 +1,10 @@
 #!/usr/bin/env bash
-#Installs nginx server and set an html file to show for GET requests
-apt update
-apt install -y nginx
+# shellcheck disable=SC2154
+# configures a brand new Ubuntu machine
 
-echo "Hello Im web server 02" > /var/www/html/index.html
-
-cat > /etc/nginx/sites-available/default << "EOF"
-# Default server configuration
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-
-        add_header X-Served-By $hostname;
-
-        root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-
-        server_name _;
-
-        location / {
-                try_files $uri $uri/ =404;
-        }
-}
-EOF
-
-service nginx restart
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+sudo sed -i "11i\\\tadd_header X-Served-By $HOSTNAME;" /etc/nginx/nginx.conf
+echo "Holberton School" | sudo tee /usr/share/nginx/html/index.html
+sudo service nginx start
