@@ -7,22 +7,31 @@ global
         user haproxy
         group haproxy
         daemon
+<<<<<<< HEAD
 
         # Default SSL material locations
         ca-base /etc/ssl/certs
         crt-base /etc/ssl/private
 
+=======
+        # Default SSL material locations
+        ca-base /etc/ssl/certs
+        crt-base /etc/ssl/private
+>>>>>>> be4699dc4ebed6aa04d91449ac1406031fd524cb
         # Default ciphers to use on SSL-enabled listening sockets.
         # For more information, see ciphers(1SSL). This list is from:
         #  https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
         ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
         ssl-default-bind-options no-sslv3
+<<<<<<< HEAD
 
         # Custom setup
         maxconn 2048
         # maximum size of temporary DHE keys that are generated
         tune.ssl.default-dh-param 2048
 
+=======
+>>>>>>> be4699dc4ebed6aa04d91449ac1406031fd524cb
 defaults
         log     global
         mode    http
@@ -39,6 +48,7 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
+<<<<<<< HEAD
         # custom setup
         # forwardfor option sets HAProxy to add X-Forwarded-For headers to each request
         option forwardfor
@@ -66,3 +76,23 @@ backend web-backend
 
 backend letsencrypt-backend
    server letsencrypt 127.0.0.1:54321
+=======
+# Configure Frontend listen all *:80 and solve with Backend
+frontend Frontend
+        bind *:80
+        mode http
+        default_backend Backend
+
+# Configure Frontend listen all *:443 and solve with Backend
+frontend Frontend_secure
+        bind *:443 ssl crt /etc/letsencrypt/live/ronas.tech/load-balancer.pem
+        http-request set-header X-Forwarded-Proto https
+        default_backend Backend
+
+# Configure the list the all server
+        backend Backend
+        balance roundrobin
+        redirect scheme https if !{ ssl_fc }
+        server 2847-web-01 34.138.88.191:80 check
+        server 2847-web-02 3.91.150.97:80 check
+>>>>>>> be4699dc4ebed6aa04d91449ac1406031fd524cb

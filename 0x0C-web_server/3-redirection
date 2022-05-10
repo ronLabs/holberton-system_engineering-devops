@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # install nginx and configure server so that /redirect_me is redirecting to another page
 
 sudo apt-get -y update
@@ -9,3 +10,32 @@ FILE="/etc/nginx/sites-available/default"
 sed -i "42a rewrite ^/redirect_me ""${REDIRECT}"" permanent;\n" $FILE
 cd /etc/nginx/sites-available
 sudo service nginx restart
+=======
+# Installs nginx server
+# Creates html page to send as response to GET requests
+# Creates a config file for the nginx server
+# Configures a route to redirect with code 301
+apt-get update
+apt-get install -y nginx
+
+echo "Hello World!" > /var/www/html/index.html
+
+cat > /etc/nginx/sites-available/default << "EOF"
+# Default server configuration
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+
+ 	server_name _;
+
+	location /redirect_me {
+		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+	}
+}
+EOF
+
+service nginx restart
+>>>>>>> be4699dc4ebed6aa04d91449ac1406031fd524cb

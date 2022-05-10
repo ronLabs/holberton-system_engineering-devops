@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # Fix the error on container with apache
 sudo service apache2 start
+=======
+# starts apache2 server
+sed -i 's/.*ServerName.*//g' /etc/apache2/apache2.conf
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+service apache2 restart
+>>>>>>> be4699dc4ebed6aa04d91449ac1406031fd524cb
