@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-Host 34.138.29.110
-    HostName 34.138.29.110
-    User ubuntu
-    PasswordAuthentication no
-    IdentityFile ~/.ssh/holberton
-=======
+
 # This is the ssh client system-wide configuration file.  See
 # ssh_config(5) for more information.  This file provides defaults for
 # users, and the values can be changed in per-user configuration files
@@ -60,4 +54,3 @@ Host *
     HashKnownHosts yes
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials no
->>>>>>> be4699dc4ebed6aa04d91449ac1406031fd524cb
