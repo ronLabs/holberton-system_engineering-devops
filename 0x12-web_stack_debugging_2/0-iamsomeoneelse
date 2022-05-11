@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 sudo -u $1 whoami
+=======
+# This script the 'whoami' command under the user passed as argument
+sudo -u "$1" whoami
+>>>>>>> 3088ca2f71cb06b6cdb2e42db8bba7c4486ba8c2
