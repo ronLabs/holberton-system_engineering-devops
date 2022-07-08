@@ -1,3 +1,8 @@
+
+<p align="center">
+  <img src="retrospect-your-post-mortems-post-mortem-your-retrospectives.jpg" />
+</p>
+
 # Issue summary
 
 Close to 10:00 hours of July 2nd, some of our users encounter difficulties loading our website our team started receiving some calls from users that were online and suddenly couldn't access to our platform the event was triggered at 10:05 and wha happened was that a programmer made a typo in the last actualization made to our codebase, this bug caused that our website couldn't load properly and stopped with an error, thus causing the server to go down, the event was detected by the monitoring system at 10:07 which fired and alert notifying the development team, which started working on finding and fixoing the issue inmediately. This incident affected 36% of our users located in europe and asia.
